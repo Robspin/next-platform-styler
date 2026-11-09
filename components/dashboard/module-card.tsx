@@ -1,8 +1,10 @@
+import { cn } from "cn";
 import type * as React from "react";
 
 import { AppIcon, type AppIconName } from "@/components/app-icon";
+import { ScrambleText } from "@/components/dashboard/scramble-text";
+import { MagicBentoCard } from "@/components/effects/magic-bento";
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -16,6 +18,7 @@ export function ModuleCard({
   description,
   linkLabel,
   linkIcon = "chevronRight",
+  className,
   children,
 }: {
   id: string;
@@ -24,17 +27,20 @@ export function ModuleCard({
   description: string;
   linkLabel: string;
   linkIcon?: AppIconName;
+  className?: string;
   children?: React.ReactNode;
 }) {
   return (
-    <Card id={id} className="scroll-mt-20">
+    <MagicBentoCard id={id} className={cn("scroll-mt-20", className)}>
       <CardHeader className="grid-cols-[auto_1fr] gap-x-3">
         <AppIcon
           name={icon}
-          className="row-span-2 mt-0.5 size-6 text-primary-text"
+          className="row-span-2 mt-0.5 size-6 text-primary-text dark:drop-shadow-[0_0_10px_color-mix(in_oklab,var(--primary)_70%,transparent)]"
         />
         <CardTitle className="tracking-wide uppercase">
-          <h2>{title}</h2>
+          <h2>
+            <ScrambleText text={title} />
+          </h2>
         </CardTitle>
         <CardDescription className="col-start-2">{description}</CardDescription>
       </CardHeader>
@@ -48,6 +54,6 @@ export function ModuleCard({
           <AppIcon name={linkIcon} />
         </a>
       </CardContent>
-    </Card>
+    </MagicBentoCard>
   );
 }

@@ -36,7 +36,7 @@ export function randomConfig(): DesignSystemConfig {
     style,
     baseColor,
     theme,
-    chartColor: chance(0.6) ? theme : (pick(colorThemes).name as typeof theme),
+    chartColor: theme,
     iconLibrary: pick(ICON_LIBRARIES).name,
     font,
     fontHeading: chance(0.6) ? "inherit" : pick(FONTS).name,

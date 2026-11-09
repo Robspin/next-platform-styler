@@ -17,7 +17,7 @@ import { CURRENT_USER, NOTIFICATIONS } from "@/lib/dashboard-data";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 flex h-(--header-height) w-full shrink-0 items-center gap-2 border-b bg-background px-3 md:px-4">
+    <header className="sticky top-0 z-50 flex h-(--header-height) w-full shrink-0 items-center gap-2 border-b bg-background/80 px-3 backdrop-blur-xl md:px-4">
       <SidebarTrigger className="-ml-1" />
       <a href="/" className="flex items-center gap-2.5 rounded-md">
         <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">

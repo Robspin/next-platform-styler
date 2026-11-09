@@ -42,6 +42,17 @@
       "linter": {
         "enabled": false
       }
+    },
+    {
+      "includes": [
+        "components/effects/counter.tsx",
+        "components/effects/decrypted-text.tsx",
+        "components/effects/radar.tsx",
+        "components/effects/text-type.tsx"
+      ],
+      "linter": {
+        "enabled": false
+      }
     }
   ]
 }
