@@ -10,11 +10,26 @@ import {
   WaypointsPreview,
 } from "@/components/dashboard/map-previews";
 import { ModuleCard } from "@/components/dashboard/module-card";
-import { PeriodSelect } from "@/components/dashboard/period-select";
 import { TheftTrendChart } from "@/components/dashboard/theft-trend-chart";
+import { WelcomeHero } from "@/components/dashboard/welcome-hero";
+import { MagicBento } from "@/components/effects/magic-bento";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { CURRENT_USER, KPIS } from "@/lib/dashboard-data";
+import { KPIS } from "@/lib/dashboard-data";
+
+const WIDE = "@2xl:col-span-3 @5xl:col-span-6";
+const NARROW = "@2xl:col-span-3";
+
+const BACKDROP_STYLE: React.CSSProperties = {
+  backgroundImage: [
+    "radial-gradient(ellipse 60% 50% at 50% 0%, color-mix(in oklab, var(--primary) 14%, transparent), transparent)",
+    "linear-gradient(to right, var(--border) 1px, transparent 1px)",
+    "linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
+  ].join(", "),
+  backgroundSize: "100% 100%, 48px 48px, 48px 48px",
+  maskImage:
+    "radial-gradient(ellipse 80% 70% at 50% 0%, black 30%, transparent)",
+};
 
 export default function DashboardPage() {
   return (
@@ -25,43 +40,31 @@ export default function DashboardPage() {
       <SiteHeader />
       <div className="flex flex-1">
         <AppSidebar />
-        <SidebarInset>
-          <div className="mx-auto grid w-full max-w-7xl gap-4 p-4 md:p-6">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div className="grid gap-1">
-                <h1 className="font-heading text-2xl font-semibold tracking-tight">
-                  Welkom terug, {CURRENT_USER.firstName}{" "}
-                  <span role="img" aria-label="zwaaiende hand">
-                    👋
-                  </span>
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                  Hieronder vind je een overzicht van alle belangrijke inzichten
-                  en acties.
-                </p>
-              </div>
-              <PeriodSelect />
-            </div>
+        <SidebarInset className="isolate">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem]"
+            style={BACKDROP_STYLE}
+          />
+          <div className="@container mx-auto w-full max-w-7xl p-4 md:p-6">
+            <MagicBento className="grid grid-flow-row-dense gap-4 @2xl:grid-cols-6 @5xl:grid-cols-12">
+              <WelcomeHero className="@2xl:col-span-6 @5xl:col-span-9 @5xl:row-span-3" />
 
-            <section
-              aria-label="Kerncijfers"
-              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            >
               {KPIS.map((kpi) => (
-                <KpiCard key={kpi.id} kpi={kpi} />
+                <KpiCard
+                  key={kpi.id}
+                  kpi={kpi}
+                  className="@2xl:col-span-2 @5xl:col-span-3"
+                />
               ))}
-            </section>
 
-            <section
-              aria-label="Modules"
-              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            >
               <ModuleCard
                 id="investigations"
                 icon="investigations"
                 title="Investigations"
                 description="Onderzoek en bekijk alle lopende en afgeronde investigaties."
                 linkLabel="Bekijk alle"
+                className={WIDE}
               >
                 <InvestigationsChart />
               </ModuleCard>
@@ -71,6 +74,7 @@ export default function DashboardPage() {
                 title="Theft Analytics"
                 description="Analyseer diefstaltrends, successen en prestaties op detailniveau."
                 linkLabel="Bekijk analytics"
+                className={WIDE}
               >
                 <TheftTrendChart />
               </ModuleCard>
@@ -80,6 +84,7 @@ export default function DashboardPage() {
                 title="Theft Cases"
                 description="Beheer diefstalcases, verzekering en status overzicht."
                 linkLabel="Bekijk cases"
+                className={WIDE}
               >
                 <CaseStatusChart />
               </ModuleCard>
@@ -89,6 +94,7 @@ export default function DashboardPage() {
                 title="Heatmaps"
                 description="Bekijk diefstallocaties op de kaart en identificeer hotspots."
                 linkLabel="Open heatmap"
+                className={NARROW}
               >
                 <HeatmapPreview />
               </ModuleCard>
@@ -98,6 +104,7 @@ export default function DashboardPage() {
                 title="Historical Waypoints"
                 description="Bekijk historische bewegingen en routegegevens voor een case."
                 linkLabel="Bekijk waypoints"
+                className={NARROW}
               >
                 <WaypointsPreview />
               </ModuleCard>
@@ -107,6 +114,7 @@ export default function DashboardPage() {
                 title="Frame Check"
                 description="Controleer framenummers en check op registraties in externe databases."
                 linkLabel="Bekijk resultaten"
+                className={WIDE}
               >
                 <FrameCheckForm />
               </ModuleCard>
@@ -116,6 +124,7 @@ export default function DashboardPage() {
                 title="Intake"
                 description="Registreer nieuwe cases en voer intake gegevens in via verschillende bronnen."
                 linkLabel="Nieuwe intake"
+                className={NARROW}
               />
               <ModuleCard
                 id="recovery-operations"
@@ -123,6 +132,7 @@ export default function DashboardPage() {
                 title="Recovery Operations"
                 description="Beheer recovery teams, opdrachten en opsporingsactiviteiten."
                 linkLabel="Open operaties"
+                className={NARROW}
               />
               <ModuleCard
                 id="intelligence"
@@ -131,6 +141,7 @@ export default function DashboardPage() {
                 description="Scrape externe bronnen en monitor online marktplaatsen voor relevante data."
                 linkLabel="Open intelligence"
                 linkIcon="externalLink"
+                className={NARROW}
               />
               <ModuleCard
                 id="integrations"
@@ -138,6 +149,7 @@ export default function DashboardPage() {
                 title="Integrations"
                 description="Beheer koppelingen met hardware providers, partners en data bronnen."
                 linkLabel="Bekijken"
+                className={NARROW}
               />
               <ModuleCard
                 id="reporting"
@@ -145,6 +157,7 @@ export default function DashboardPage() {
                 title="Reporting"
                 description="Genereer rapportages en exporteer inzichten voor verzekeraars en partners."
                 linkLabel="Open rapportages"
+                className={NARROW}
               />
               <ModuleCard
                 id="administration"
@@ -152,8 +165,9 @@ export default function DashboardPage() {
                 title="Administration"
                 description="Beheer gebruikers, rollen, rechten en instellingen van het platform."
                 linkLabel="Open administratie"
+                className={NARROW}
               />
-            </section>
+            </MagicBento>
           </div>
         </SidebarInset>
       </div>

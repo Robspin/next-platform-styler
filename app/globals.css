@@ -81,6 +81,76 @@
   }
 }
 
+/* Translucent menus swap the accent highlight for a neutral tint, so accent text (white with the bold accent) must follow suit. */
+:root .cn-menu-translucent {
+  --accent-foreground: var(--foreground);
+}
+
+/* Bento cards stay hidden until the MagicBento engine reveals them, so the stagger plays on first view. */
+.magic-bento {
+  --mb-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@supports (transition-timing-function: linear(0, 1)) {
+  .magic-bento {
+    --mb-spring: linear(
+      0,
+      0.0603,
+      0.2033,
+      0.3821,
+      0.5633,
+      0.7258,
+      0.8584,
+      0.9574,
+      1.0242,
+      1.0634,
+      1.0809,
+      1.0828,
+      1.0747,
+      1.0613,
+      1.046,
+      1.0313,
+      1.0186,
+      1.0085,
+      1.0012,
+      0.9965,
+      0.994,
+      0.9931,
+      0.9933,
+      0.9941,
+      0.9953,
+      0.9966,
+      0.9978,
+      0.9988,
+      1
+    );
+  }
+}
+
+.magic-bento[data-intro] [data-bento-card] {
+  opacity: 0;
+  translate: 0 16px;
+  scale: 0.97;
+}
+
+.magic-bento[data-intro] [data-bento-card][data-state="in"] {
+  opacity: 1;
+  translate: none;
+  scale: none;
+  transition:
+    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1) var(--mb-delay, 0ms),
+    translate 760ms var(--mb-spring) var(--mb-delay, 0ms),
+    scale 760ms var(--mb-spring) var(--mb-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magic-bento[data-intro] [data-bento-card] {
+    opacity: 1;
+    translate: none;
+    scale: none;
+  }
+}
+
 /* The customizer keeps a fixed look so it stays legible whatever theme is being previewed. */
 .customizer {
   --background: oklch(0.145 0 0);

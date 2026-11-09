@@ -1,11 +1,13 @@
 import { AppIcon } from "@/components/app-icon";
-import { Card, CardContent } from "@/components/ui/card";
+import { Counter } from "@/components/effects/counter";
+import { MagicBentoCard } from "@/components/effects/magic-bento";
+import { CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { type Kpi, numberFormat } from "@/lib/dashboard-data";
+import type { Kpi } from "@/lib/dashboard-data";
 
-export function KpiCard({ kpi }: { kpi: Kpi }) {
+export function KpiCard({ kpi, className }: { kpi: Kpi; className?: string }) {
   return (
-    <Card>
+    <MagicBentoCard className={className}>
       <CardContent className="grid gap-3">
         <div className="flex items-start justify-between gap-4">
           <div className="grid gap-1">
@@ -13,7 +15,7 @@ export function KpiCard({ kpi }: { kpi: Kpi }) {
               {kpi.label}
             </h2>
             <p className="font-heading text-3xl font-semibold tabular-nums">
-              {numberFormat.format(kpi.value)}
+              <Counter value={kpi.value} locale="nl-NL" fontSize="inherit" />
             </p>
           </div>
           <AppIcon name={kpi.icon} className="size-6 text-muted-foreground" />
@@ -30,6 +32,6 @@ export function KpiCard({ kpi }: { kpi: Kpi }) {
           aria-label={`${kpi.label}: ${kpi.progress}% van het maanddoel`}
         />
       </CardContent>
-    </Card>
+    </MagicBentoCard>
   );
 }
